@@ -27,7 +27,7 @@ public class GameActivity extends AppCompatActivity  implements View.OnClickList
     int[] filledPos = {-1, -1, -1, -1, -1, -1, -1, -1, -1};
 
     boolean isGameActive = true;
-    int counter = 0;
+    public static int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +76,6 @@ public class GameActivity extends AppCompatActivity  implements View.OnClickList
             counter++;
             Log.d("TAG", "onClick: "+counter);
 
-            // check if its the last box
-            if (counter == 9) {
-                // reset the game
-                isGameActive = false;
-                restartGame();
-            }
             filledPos[clickedTag] = activePlayer;
 
             if (activePlayer == PLAYER_O) {
