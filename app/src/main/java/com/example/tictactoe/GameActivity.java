@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,14 +21,13 @@ public class GameActivity extends AppCompatActivity  implements View.OnClickList
 
     int PLAYER_O = 0;
     int PLAYER_X = 1;
-    int j=0;
 
     int activePlayer = PLAYER_O;
 
     int[] filledPos = {-1, -1, -1, -1, -1, -1, -1, -1, -1};
 
     boolean isGameActive = true;
-    public static int counter = 0;
+    int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class GameActivity extends AppCompatActivity  implements View.OnClickList
         binding=ActivityGameBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        headerText = findViewById(R.id.header_text);
+        headerText = findViewById(R.id.header_text1);
         headerText.setText("O turn");
 
 
@@ -47,6 +48,13 @@ public class GameActivity extends AppCompatActivity  implements View.OnClickList
         binding.btn6.setOnClickListener(this);
         binding.btn7.setOnClickListener(this);
         binding.btn8.setOnClickListener(this);
+//        binding.reset.setOnClickListener(new View.OnClickListener() {
+//            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//            @Override
+//            public void onClick(View v) {
+//                restartGame();
+//            }
+//        });
 
 
     }
@@ -55,26 +63,24 @@ public class GameActivity extends AppCompatActivity  implements View.OnClickList
     @Override
     public void onClick(View v) {
         // logic for button press
-
-        if (!isGameActive)
-            return;
-
         Button clickedBtn = findViewById(v.getId());
         int clickedTag = Integer.parseInt(v.getTag().toString());
 
-//        if (filledPos[clickedTag] != -1) {
-//            return;
-//        }
 
+        if (!isGameActive){
+            restartGame();
+        }
         if (filledPos[clickedTag] == -1) {
             // increase the counter
             // after every tap
             counter++;
+            Log.d("TAG", "onClick: "+counter);
 
             // check if its the last box
             if (counter == 9) {
                 // reset the game
                 isGameActive = false;
+                restartGame();
             }
             filledPos[clickedTag] = activePlayer;
 
@@ -89,8 +95,6 @@ public class GameActivity extends AppCompatActivity  implements View.OnClickList
             }
 
             checkForWin();
-
-
         }
     }
     private void checkForWin() {
@@ -108,29 +112,56 @@ public class GameActivity extends AppCompatActivity  implements View.OnClickList
                     flag = 1;
                     isGameActive = false;
 
-                    if (filledPos[val0] == PLAYER_O)
-                        showDialog("O is winner");
+                    if (filledPos[val0] == PLAYER_O){
+                        showDialog("Congratulations !!! O is winner");
+                        counter=0;
+                    }
                     else
-                        showDialog("X is winner");
+                    {
+                        showDialog("Congratulations !!! X is winner");
+                        counter=0;
+                    }
+
                 }
             }
         }
         if (counter == 9 && flag == 0) {
-            showDialog("Match draw");
+            showDialog1("Match draw");
+            counter=0;
         }
     }
 
+    private void showDialog1(String match_draw) {
+
+        AlertDialog.Builder alertadd = new AlertDialog.Builder(GameActivity.this);
+        LayoutInflater factory = LayoutInflater.from(GameActivity.this);
+        final View view = factory.inflate(R.layout.sample1, null);
+        alertadd.setTitle(match_draw);
+        alertadd.setView(view);
+        alertadd.setNeutralButton("Restart GAme", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            public void onClick(DialogInterface dlg, int sumthin) {
+                restartGame();
+            }
+        });
+
+        alertadd.show();
+    }
+
     private void showDialog(String winnerText) {
-        new AlertDialog.Builder(this)
-                .setTitle(winnerText)
-                .setPositiveButton("Restart game", new DialogInterface.OnClickListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        restartGame();
-                    }
-                })
-                .show();
+        AlertDialog.Builder alertadd = new AlertDialog.Builder(GameActivity.this);
+        LayoutInflater factory = LayoutInflater.from(GameActivity.this);
+        final View view = factory.inflate(R.layout.sample, null);
+        alertadd.setTitle(winnerText);
+        alertadd.setView(view);
+        alertadd.setNeutralButton("Restart GAme", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            public void onClick(DialogInterface dlg, int sumthin) {
+                restartGame();
+            }
+        });
+
+        alertadd.show();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
