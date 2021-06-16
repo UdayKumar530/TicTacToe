@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:background="@drawable/back3"
     tools:context=".SplashActivity">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="416dp"
         android:layout_height="252dp"
-        android:background="@drawable/btn_bg"
+        android:background="#1700BCD4"
         android:shadowColor="@color/cardview_shadow_end_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +20,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="335dp"
-        android:layout_height="298dp"
+        android:layout_width="329dp"
+        android:layout_height="323dp"
         android:layout_marginTop="64dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,14 +38,16 @@
         android:layout_marginEnd="80dp"
         android:layout_marginRight="80dp"
         android:layout_marginBottom="151dp"
-        android:background="#A83BD5C6"
+        android:background="#F9FDFD"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Lets Start The Game"
+        android:text="Lets Start The Game !!!"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
