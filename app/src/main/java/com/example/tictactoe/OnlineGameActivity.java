@@ -19,11 +19,20 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tictactoe.databinding.ActivityGameBinding;
+import com.example.tictactoe.databinding.ActivityOnlineGameBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class GameActivity extends AppCompatActivity  implements View.OnClickListener {
+public class OnlineGameActivity extends AppCompatActivity implements View.OnClickListener{
+    private String TAG="OnLineGame";
+    ActivityOnlineGameBinding binding;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
     FirebaseAuth mAuth;
-    ActivityGameBinding binding;
     TextView headerText;
 
     int PLAYER_O = 0;
@@ -35,14 +44,14 @@ public class GameActivity extends AppCompatActivity  implements View.OnClickList
 
     boolean isGameActive = true;
     public static int counter = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityGameBinding.inflate(getLayoutInflater());
+        binding=ActivityOnlineGameBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        mAuth=FirebaseAuth.getInstance();
+        getSupportActionBar().hide();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
         headerText = findViewById(R.id.header_text1);
         headerText.setText("O turn");
 
@@ -127,8 +136,8 @@ public class GameActivity extends AppCompatActivity  implements View.OnClickList
 
     private void showDialog1(String match_draw) {
 
-        AlertDialog.Builder alertadd = new AlertDialog.Builder(GameActivity.this);
-        LayoutInflater factory = LayoutInflater.from(GameActivity.this);
+        AlertDialog.Builder alertadd = new AlertDialog.Builder(OnlineGameActivity.this);
+        LayoutInflater factory = LayoutInflater.from(OnlineGameActivity.this);
         final View view = factory.inflate(R.layout.sample1, null);
         alertadd.setTitle(match_draw);
         alertadd.setView(view);
@@ -143,8 +152,8 @@ public class GameActivity extends AppCompatActivity  implements View.OnClickList
     }
 
     private void showDialog(String winnerText) {
-        AlertDialog.Builder alertadd = new AlertDialog.Builder(GameActivity.this);
-        LayoutInflater factory = LayoutInflater.from(GameActivity.this);
+        AlertDialog.Builder alertadd = new AlertDialog.Builder(OnlineGameActivity.this);
+        LayoutInflater factory = LayoutInflater.from(OnlineGameActivity.this);
         final View view = factory.inflate(R.layout.sample, null);
         alertadd.setTitle(winnerText);
         alertadd.setView(view);
@@ -189,7 +198,7 @@ public class GameActivity extends AppCompatActivity  implements View.OnClickList
                 break;
             case R.id.logout:
                 mAuth.signOut();
-                Intent intent=new Intent(GameActivity.this,Login.class);
+                Intent intent=new Intent(OnlineGameActivity.this,Login.class);
                 startActivity(intent);
                 finish();
                 break;
