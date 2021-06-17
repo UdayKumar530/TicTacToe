@@ -10,13 +10,13 @@
     tools:context=".SignUpActivity">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="382dp"
-        android:layout_height="115dp"
-        android:src="@drawable/girl3"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp" />
+<!--    <de.hdodenhof.circleimageview.CircleImageView-->
+<!--        android:id="@+id/profile_image"-->
+<!--        android:layout_width="382dp"-->
+<!--        android:layout_height="115dp"-->
+<!--        android:src="@drawable/girl3"-->
+<!--        app:civ_border_color="#FF000000"-->
+<!--        app:civ_border_width="2dp" />-->
 
 
 

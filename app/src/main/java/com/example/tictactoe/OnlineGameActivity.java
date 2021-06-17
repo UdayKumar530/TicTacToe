@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.tictactoe.databinding.ActivityGameBinding;
 import com.example.tictactoe.databinding.ActivityOnlineGameBinding;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +34,7 @@ public class OnlineGameActivity extends AppCompatActivity implements View.OnClic
     FirebaseDatabase database;
     DatabaseReference myRef;
     FirebaseAuth mAuth;
+    FirebaseAnalytics firebaseAnalytics;
     TextView headerText;
 
     int PLAYER_O = 0;
@@ -52,6 +54,7 @@ public class OnlineGameActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().hide();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
+        firebaseAnalytics=FirebaseAnalytics.getInstance(this);
         headerText = findViewById(R.id.header_text1);
         headerText.setText("O turn");
 
