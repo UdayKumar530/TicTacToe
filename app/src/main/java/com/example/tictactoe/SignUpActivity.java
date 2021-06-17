@@ -59,9 +59,6 @@ public class SignUpActivity extends AppCompatActivity {
     private CircleImageView circleImageView;
     private DatabaseReference mRootRef;
     ProgressDialog pd;
-    public static final int CAMERA_PERM_CODE = 101;
-    public static final int CAMERA_REQUEST_CODE = 102;
-    public static final int GALLERY_REQUEST_CODE = 105;
     Uri contentUri;
     String currentPhotoPath;
 
@@ -74,7 +71,6 @@ public class SignUpActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        circleImageView=findViewById(R.id.profile_image);
         mRootRef = FirebaseDatabase.getInstance().getReference();
 
         mAuth = FirebaseAuth.getInstance();
@@ -102,13 +98,13 @@ public class SignUpActivity extends AppCompatActivity {
                 } else if (txtPassword.length() < 6){
                     Toast.makeText(SignUpActivity.this, "Password too short!", Toast.LENGTH_SHORT).show();
                 } else {
-                    registerUser(profile,txtName , txtEmail , txtPassword);
+                    registerUser(txtName , txtEmail , txtPassword);
                 }
             }
         });
     }
 
-    private void registerUser( final String profile,final String name, final String email, String password) {
+    private void registerUser(final String name, final String email, String password) {
 
         pd.setMessage("Please Wait!");
         pd.show();
@@ -125,7 +121,6 @@ public class SignUpActivity extends AppCompatActivity {
                 map.put("name" , name);
                 map.put("email", email);
                 map.put("id" , mAuth.getCurrentUser().getUid());
-                map.put("profile", profile);
                 map.put("wins",wins);
 
                 mRootRef.child("Users").child(mAuth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
