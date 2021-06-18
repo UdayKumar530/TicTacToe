@@ -19,16 +19,29 @@ FirebaseUser user;
         getSupportActionBar().hide();
         mAuth=FirebaseAuth.getInstance();
         user=mAuth.getCurrentUser();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if(user!=null){
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                }else {
-                    startActivity(new Intent(SplashActivity.this, Login.class));
+
+        Thread timer= new Thread()
+        {
+            public void run()
+            {
+                try
+                {
+                    //Display for 3 seconds
+                    sleep(3000);
                 }
-                finish();
+                catch (InterruptedException e)
+                {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                }
+                finally
+                {
+                    Intent intent = new Intent(getApplicationContext(), MenueActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
-        },2000);
+        };
+        timer.start();
     }
 }
